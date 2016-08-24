@@ -1,0 +1,19 @@
+<div class="jumbotron">
+  <h2><%= gettext "Welcome to %{name}", name: "Lean Coffee" %></h2>
+  <p class="lead">Your Lean Coffee facilitator.</p>
+</div>
+
+<div class="row marketing">
+  <div class="col-md-6">
+    <h3 class="lead">What is Lean Coffee?</h3>
+    <p class="text-justify">Lean Coffee is a flexible way of having an open and dyanmic meeting. Organisers can invite attendees to submit topics which are then voted on by all attendees. The ones with the highest votes are chosen to be discussed first.</p>
+    <h3 class="lead">What makes it different?</h3>
+    <p class="text-justify">With no strict agenda topics can be diverse and often raise conversations or talking points outside of your standard meeting.</p>
+    <h3 class="lead">Does it work?</h3>
+    <p class="text-justify">Yes! for more information see <a href="http://leancoffee.org/">leancoffee.org</a></p>
+  </div>
+
+  <div class="col-md-6 pull-right">
+    <img src="/images/teapot.png" class="img-responsive img-rounded">
+  </div>
+</div>
