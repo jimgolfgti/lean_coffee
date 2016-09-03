@@ -42,6 +42,20 @@ defmodule LeanCoffee.ChannelControllerTest do
   end
 
   @tag login_as: "user@example.com"
+  test "index renders a page at a time", %{conn: conn, user: user} do
+    for i <- 1..15, do: insert_channel(user, name: List.to_string(:io_lib.format("channel_~2..0B", [i])))
+
+    conn = get conn, channel_path(conn, :index, %{page: 2})
+    assert html_response(conn, 200) =~ "Listing channels"
+    assert String.contains?(conn.resp_body, "channel_05")
+    assert String.contains?(conn.resp_body, "channel_04")
+    assert String.contains?(conn.resp_body, "channel_03")
+    assert String.contains?(conn.resp_body, "channel_02")
+    assert String.contains?(conn.resp_body, "channel_01")
+    refute String.contains?(conn.resp_body, "channel_06")
+  end
+
+  @tag login_as: "user@example.com"
   test "renders form for new resources", %{conn: conn} do
     conn = get conn, channel_path(conn, :new)
     assert html_response(conn, 200) =~ "New channel"

@@ -1,0 +1,3 @@
+<h2><%= @channel.name %></h2>
+
+<%= link "Back", to: nav_path(@conn, :index) %>

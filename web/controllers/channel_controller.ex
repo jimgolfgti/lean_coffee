@@ -7,9 +7,15 @@ defmodule LeanCoffee.ChannelController do
     apply(__MODULE__, action_name(conn), [conn, conn.params, conn.assigns.current_user])
   end
 
-  def index(conn, _params, user) do
-    channels = Repo.all(user_channels(user))
-    render(conn, "index.html", channels: channels)
+  def index(conn, params, user) do
+    page =
+      user_channels(user)
+      |> order_by(desc: :updated_at)
+      |> Repo.paginate(params)
+    render(conn, "index.html",
+      channels: page.entries,
+      page_number: page.page_number,
+      total_pages: page.total_pages)
   end
 
   def new(conn, _params, user) do

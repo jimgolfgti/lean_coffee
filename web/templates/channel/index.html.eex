@@ -24,5 +24,18 @@
 <% end %>
   </tbody>
 </table>
+<nav aria-label="Browse your channels">
+  <ul class="pager">
+    <li class="previous <%= if @page_number == 1 do %>disabled<% end %>">
+    <%= link to: channel_path(@conn, :index, page: @page_number - 1) do %>
+      <span aria-hidden="true">&larr;</span> Newer
+    <% end %></li>
+    <li class="next <%= if @page_number == @total_pages do %>disabled<% end %>">
+    <%= link to: channel_path(@conn, :index, page: @page_number + 1) do %>
+      Older <span aria-hidden=\"true\">&rarr;</span>
+    <% end %>
+    </li>
+  </ul>
+</nav>
 
 <%= link "New channel", to: channel_path(@conn, :new), class: "btn btn-primary", role: "button" %>

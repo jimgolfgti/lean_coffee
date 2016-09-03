@@ -3,4 +3,4 @@
 <%= render "form.html", changeset: @changeset,
                         action: channel_path(@conn, :create) %>
 
-<%= link "Back", to: channel_path(@conn, :index) %>
+<%= link "My Channels", to: channel_path(@conn, :index) %>
