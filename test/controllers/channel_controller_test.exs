@@ -103,8 +103,8 @@ defmodule LeanCoffee.ChannelControllerTest do
   test "updates chosen resource and redirects when data is valid", %{conn: conn, user: user} do
     channel = insert_channel(user)
     conn = put conn, channel_path(conn, :update, channel), channel: @valid_attrs
+    channel = Repo.get_by(Channel, @valid_attrs)
     assert redirected_to(conn) == channel_path(conn, :show, channel)
-    assert Repo.get_by(Channel, @valid_attrs)
   end
 
   @tag login_as: "user@example.com"
