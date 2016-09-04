@@ -19,3 +19,8 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+$(() => {
+  $('ul.pager>li.disabled>a').on('click', e => {
+    e.preventDefault();
+  });
+});

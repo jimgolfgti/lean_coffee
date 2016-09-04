@@ -25,7 +25,8 @@
     <li class="previous <%= if @page_number == 1 do %>disabled<% end %>">
     <%= link to: nav_path(@conn, :index, page: @page_number - 1) do %>
       <span aria-hidden="true">&larr;</span> Newer
-    <% end %></li>
+    <% end %>
+    </li>
     <li class="next <%= if @page_number == @total_pages do %>disabled<% end %>">
     <%= link to: nav_path(@conn, :index, page: @page_number + 1) do %>
       Older <span aria-hidden=\"true\">&rarr;</span>

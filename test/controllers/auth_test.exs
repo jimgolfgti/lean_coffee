@@ -77,9 +77,16 @@ defmodule LeanCoffee.AuthTest do
   end
 
   test "login with password mismatch", %{conn: conn} do
-    _ = insert_user(username: "me@example.com", password: "secret")
+    insert_user(username: "me@example.com", password: "secret")
 
     assert {:error, :unauthorised, _conn} =
       Auth.login_by_username_and_pass(conn, "me@example.com", "incorrect", repo: Repo)
+  end
+
+  test "login with no password set", %{conn: conn} do
+    Repo.insert!(%LeanCoffee.User{username: "me@example.com"})
+
+    assert {:error, :no_password, _conn} =
+      Auth.login_by_username_and_pass(conn, "me@example.com", "irrelevant", repo: Repo)
   end
 end

@@ -24,6 +24,13 @@ defmodule LeanCoffee.Router do
     resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
 
+  scope "/auth", LeanCoffee do
+    pipe_through :browser
+
+    get "/", OAuthController, :index, as: :oauth
+    get "/callback", OAuthController, :callback, as: :oauth
+  end
+
   scope "/manage", LeanCoffee do
     pipe_through [:browser, :authenticate_user]
 

@@ -11,6 +11,10 @@ defmodule LeanCoffee.SessionController do
         conn
         |> put_flash(:info, "Welcome back!")
         |> redirect(to: page_path(conn, :index))
+      {:error, :no_password, conn} ->
+        conn
+        |> put_flash(:error, "No password set, use Google Sign-in")
+        |> render("new.html")
       {:error, _reason, conn} ->
         conn
         |> put_flash(:error, "Invalid username/password combination")

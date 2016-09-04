@@ -18,7 +18,7 @@ defmodule LeanCoffee.User do
     struct
     |> cast(params, [:username, :name])
     |> unique_constraint(:username)
-    |> validate_required([:username, :name])
+    |> validate_required([:username])
     |> validate_format(:username, ~r/@/, message: "should be an email address")
   end
 

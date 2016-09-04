@@ -2,6 +2,7 @@ defmodule LeanCoffee.UserController do
   use LeanCoffee.Web, :controller
 
   plug :authenticate_user when action in [:show]
+  plug :scrub_params, "user" when action in [:create]
 
   alias LeanCoffee.User
 

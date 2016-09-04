@@ -15,7 +15,7 @@
     <div class="container-fluid">
       <header class="header">
         <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
+          <ul class="nav nav-pills navbar-right">
             <li><%= link "Channels", to: nav_path(@conn, :index) %></li>
             <%= if @current_user do %>
             <li role="presentation" class="dropdown">
@@ -34,7 +34,7 @@
             <% end %>
           </ul>
         </nav>
-        <span class="logo"></span>
+        <span class="logo hidden-xs"></span>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
