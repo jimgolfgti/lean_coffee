@@ -20,3 +20,7 @@ config :lean_coffee, LeanCoffee.Repo,
 
 config :comeonin, :bcrypt_log_rounds, 4
 config :comeonin, :pbkdf2_rounds, 1
+
+if File.exists?("test.travis.exs") do
+  import_config("test.travis.exs")
+end

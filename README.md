@@ -1,4 +1,5 @@
 # LeanCoffee
+[![Build Status](https://travis-ci.org/jimgolfgti/lean_coffee.svg?branch=master)](https://travis-ci.org/jimgolfgti/lean_coffee)
 
 To start app:
 
