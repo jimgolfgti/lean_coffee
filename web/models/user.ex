@@ -7,6 +7,7 @@ defmodule LeanCoffee.User do
     field :password, :string, virtual: true
     field :password_hash, :string
     has_many :channels, LeanCoffee.Channel
+    has_many :topics, LeanCoffee.Topic
 
     timestamps()
   end

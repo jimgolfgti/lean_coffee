@@ -34,16 +34,6 @@ form.link, form.button {
   padding-left: 15px;
 }
 
-/* Customize container */
-@media (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
-}
-.container-narrow > hr {
-  margin: 30px 0;
-}
-
 /* Main marketing message */
 .jumbotron {
   text-align: center;
@@ -73,17 +63,32 @@ form.link, form.button {
   }
 }
 
-.nav>li>form>a:hover {
-  text-decoration: none;
-  background-color: #eee;
+.nav {
+  li>form {
+    a {
+      position: relative;
+      display: block;
+      padding: 10px 15px;
+    }
+    a:hover {
+      text-decoration: none;
+      background-color: #eee;
+    }
+  }
 }
 
 .nav-pills>li>form>a {
   border-radius: 4px;
 }
 
-.nav>li>form>a {
-  position: relative;
-  display: block;
-  padding: 10px 15px;
+.grid-sizer {
+  display: none;
+}
+
+.grid-item-content {
+  .panel-heading, .panel-body, .panel-footer {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

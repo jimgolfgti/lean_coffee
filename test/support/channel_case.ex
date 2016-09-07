@@ -25,6 +25,7 @@ defmodule LeanCoffee.ChannelCase do
       import Ecto.Changeset
       import Ecto.Query
 
+      import LeanCoffee.TestHelpers
 
       # The default endpoint for testing
       @endpoint LeanCoffee.Endpoint

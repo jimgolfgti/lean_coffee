@@ -6,6 +6,7 @@ defmodule LeanCoffee.Channel do
     field :name, :string
     field :slug, :string
     belongs_to :user, LeanCoffee.User
+    has_many :topics, LeanCoffee.Topic
 
     timestamps()
   end

@@ -18,9 +18,13 @@ import "phoenix_html"
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
-// import socket from "./socket"
+import socket from "./socket"
+import Channel from "./channel"
+import Isotope from "isotope-layout"
+Channel.init(socket, document.getElementById("channel"), Isotope)
+
 $(() => {
   $('ul.pager>li.disabled>a').on('click', e => {
-    e.preventDefault();
-  });
-});
+    e.preventDefault()
+  })
+})

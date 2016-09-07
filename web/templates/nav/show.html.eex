@@ -1,3 +1,27 @@
 <h2><%= @channel.name %></h2>
 
+<div id="channel" data-id="<%= @channel.id %>" class="grid"></div>
+
+<%= if @current_user do %>
+<div class="input-group">
+  <span class="input-group-addon" id="topic-subject-addon">Topic</span>
+  <input id="topic-subject"
+         type="text"
+         class="form-control"
+         aria-described-by="topic-subject-addon"
+         placeholder="Your suggestion..."></input>
+</div>
+<div class="input-group">
+  <span class="input-group-addon" id="topic-body-addon">Details</span>
+  <textarea id="topic-body"
+            rows="3"
+            class="form-control"
+            aria-described-by="topic-body-addon"
+            placeholder="Describe your topic please..."></textarea>
+</div>
+<button id="topic-submit" type="button" class="btn btn-primary form-control">
+  Suggest
+</button>
+<% end %>
+
 <%= link "Back", to: nav_path(@conn, :index) %>

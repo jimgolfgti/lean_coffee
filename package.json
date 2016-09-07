@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "bootstrap-sass": "^3.3.7",
+    "isotope-layout": "^3.0.1",
     "jquery": "^3.1.0",
     "phoenix": "file:deps/phoenix",
     "phoenix_html": "file:deps/phoenix_html"
