@@ -8,9 +8,13 @@ defmodule LeanCoffee.User do
     field :password_hash, :string
     has_many :channels, LeanCoffee.Channel
     has_many :topics, LeanCoffee.Topic
+    has_many :topic_votes, LeanCoffee.Topic.Vote
 
     timestamps()
   end
+
+  def user_name(%{name: name, username: username}) when is_nil(name), do: username
+  def user_name(%{name: name}), do: name
 
   @doc """
   Builds a changeset based on the `struct` and `params`.

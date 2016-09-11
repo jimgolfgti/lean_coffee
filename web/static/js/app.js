@@ -20,8 +20,7 @@ import "phoenix_html"
 
 import socket from "./socket"
 import Channel from "./channel"
-import Isotope from "isotope-layout"
-Channel.init(socket, document.getElementById("channel"), Isotope)
+Channel.init(socket, document.getElementById("channel"))
 
 $(() => {
   $('ul.pager>li.disabled>a').on('click', e => {

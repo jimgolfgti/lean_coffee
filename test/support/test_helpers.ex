@@ -22,12 +22,16 @@ defmodule LeanCoffee.TestHelpers do
     |> Repo.insert!()
   end
 
-  def insert_topic(user, channel, attrs \\ %{}) do
+  def insert_topic(user, channel, attrs \\ %{})
+  def insert_topic(user, %LeanCoffee.Channel{} = channel, attrs) do
+    insert_topic(user, channel.id, attrs)
+  end
+  def insert_topic(user, channel_id, attrs) when is_integer(channel_id) do
     changes = Dict.merge(%{
         subject: "The Subject"
       }, attrs)
     user
-    |> Ecto.build_assoc(:topics, channel_id: channel.id)
+    |> Ecto.build_assoc(:topics, channel_id: channel_id)
     |> LeanCoffee.Topic.changeset(changes)
     |> Repo.insert!()
   end

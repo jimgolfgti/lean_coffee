@@ -6,7 +6,8 @@ defmodule LeanCoffee.TopicView do
       id: topic.id,
       subject: topic.subject,
       body: topic.body,
-      user: render_one(topic.user, LeanCoffee.UserView, "user.json")
+      user: render_one(topic.user, LeanCoffee.UserView, "user.json"),
+      votes: render_many(topic.votes, LeanCoffee.TopicVoteView, "vote.json")
     }
   end
 end

@@ -1,5 +1,5 @@
 defmodule LeanCoffee.TopicTest do
-  use LeanCoffee.ModelCase
+  use LeanCoffee.ModelCase, async: true
 
   alias LeanCoffee.Topic
 

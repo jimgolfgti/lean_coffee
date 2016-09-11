@@ -34,6 +34,7 @@ defmodule LeanCoffee.MeetingChannelTest do
   test "join with topics replies with available topics", %{socket: socket, user: user} do
     channel = insert_channel(user)
     topic = insert_topic(user, channel)
+    vote_for_topic user, topic
 
     {:ok, reply, _socket} = subscribe_and_join(socket, "channel:#{channel.id}", %{})
 
@@ -41,7 +42,10 @@ defmodule LeanCoffee.MeetingChannelTest do
         id: topic.id,
         subject: topic.subject,
         body: topic.body,
-        user: %{id: user.id, username: LeanCoffee.LayoutView.user_name(user)}
+        user: %{id: user.id, username: LeanCoffee.User.user_name(user)},
+        votes: [
+          %{id: user.id, username: LeanCoffee.User.user_name(user)}
+        ]
       }]
     }
   end
@@ -88,7 +92,54 @@ defmodule LeanCoffee.MeetingChannelTest do
       id: _,
       subject: "my topic",
       body: nil,
-      user: %{id: ^user_id, username: ^user_name}
+      user: %{id: ^user_id, username: ^user_name},
+      votes: []
+    }
+  end
+
+  test "topic_vote broadcasts to channel subscribes", %{socket: socket, user: user} do
+    socket = subscribe_and_join socket
+    topic = insert_topic user, socket.assigns.channel_id
+
+    push socket, "topic_vote", %{id: "#{topic.id}"}
+
+    topic_id = topic.id
+    this_user = %{id: user.id, username: LeanCoffee.LayoutView.user_name(user)}
+    assert_broadcast "topic_update", %{
+      id: ^topic_id,
+      votes: [^this_user]
+    }
+  end
+
+  test "duplicate topic_vote returns errors", %{socket: socket, user: user} do
+    socket = subscribe_and_join socket
+    topic = insert_topic user, socket.assigns.channel_id
+    vote_for_topic user, topic
+
+    ref = push socket, "topic_vote", %{id: "#{topic.id}"}
+
+    assert_reply ref, :error, %{errors: %{topic: [_]}}
+  end
+
+  test "topic_vote returns current votes for topic", %{socket: socket, user: user} do
+    socket = subscribe_and_join socket
+    topic = insert_topic user, socket.assigns.channel_id
+    another_topic = insert_topic user, socket.assigns.channel_id
+    vote_for_topic user, another_topic
+    other_user = insert_user(%{name: "Other User"})
+    vote_for_topic other_user, topic
+
+    push socket, "topic_vote", %{id: "#{topic.id}"}
+
+    topic_id = topic.id
+    other_user = %{id: other_user.id, username: LeanCoffee.LayoutView.user_name(other_user)}
+    this_user = %{id: user.id, username: LeanCoffee.LayoutView.user_name(user)}
+    assert_broadcast "topic_update", %{
+      id: ^topic_id,
+      votes: [
+        ^other_user,
+        ^this_user
+      ]
     }
   end
 
@@ -98,5 +149,12 @@ defmodule LeanCoffee.MeetingChannelTest do
 
     {:ok, _, socket} = subscribe_and_join(socket, "channel:#{channel.id}", %{})
     socket
+  end
+
+  defp vote_for_topic(user, topic) do
+    user
+    |> build_assoc(:topic_votes, topic_id: topic.id)
+    |> LeanCoffee.Topic.Vote.changeset()
+    |> Repo.insert!()
   end
 end
