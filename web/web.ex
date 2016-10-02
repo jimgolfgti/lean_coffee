@@ -49,6 +49,8 @@ defmodule LeanCoffee.Web do
 
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
+      import Phoenix.HTML.Form, except: [number_input: 2, number_input: 3, text_input: 3, password_input: 3]
+      import LeanCoffee.ValidInputs
 
       import LeanCoffee.Router.Helpers
       import LeanCoffee.ErrorHelpers

@@ -24,10 +24,10 @@ defmodule LeanCoffee.User do
     |> cast(params, [:username, :name])
     |> unique_constraint(:username)
     |> validate_required([:username])
-    |> validate_format(:username, ~r/@/, message: "should be an email address")
+    |> validate_format(:username, ~r/.+@.+/, message: "should be an email address")
   end
 
-  def registration_changeset(struct, params) do
+  def registration_changeset(struct, params \\ %{}) do
     struct
     |> changeset(params)
     |> cast(params, [:password])
