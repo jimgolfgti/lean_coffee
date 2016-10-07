@@ -21,12 +21,13 @@ defmodule LeanCoffee.MeetingChannel do
     )
     resp = %{topics: Phoenix.View.render_many(topics, TopicView, "topic.json")}
 
+    send(self, :after_join)
     {:ok, resp, assign(socket, :channel_id, channel_id)}
   end
 
   def handle_in(event, params, socket) do
     case socket.assigns.user_id do
-      "anon" ->
+      :anon ->
         {:reply, :ok, socket}
       user_id ->
         user = Repo.get(User, user_id)
@@ -78,7 +79,7 @@ defmodule LeanCoffee.MeetingChannel do
 
         broadcast! socket, "topic_update", %{
           id: topic_id,
-          votes: Enum.map(votes, &(%{id: &1.id, username: User.user_name(&1)}))
+          votes: Enum.map(votes, &(%{id: &1.id, username: User.display_name(&1)}))
         }
         {:reply, :ok, socket}
       {:error, changeset} ->
@@ -88,5 +89,19 @@ defmodule LeanCoffee.MeetingChannel do
             })
           }, socket}
     end
+  end
+
+  def handle_info(:after_join, socket) do
+    track_user socket
+    push socket, "presence_state", LeanCoffee.Presence.list(socket)
+    {:noreply, socket}
+  end
+
+  defp track_user(socket = %{assigns: %{user_id: :anon}}), do: :ok
+  defp track_user(socket = %{assigns: %{user_id: user_id}}) do
+    {:ok, _} = LeanCoffee.Presence.track(socket, user_id, %{
+      online_at: System.system_time(:milli_seconds)
+    })
+    :ok
   end
 end

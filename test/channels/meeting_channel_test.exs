@@ -42,9 +42,9 @@ defmodule LeanCoffee.MeetingChannelTest do
         id: topic.id,
         subject: topic.subject,
         body: topic.body,
-        user: %{id: user.id, username: LeanCoffee.User.user_name(user)},
+        user: %{id: user.id, username: LeanCoffee.User.display_name(user)},
         votes: [
-          %{id: user.id, username: LeanCoffee.User.user_name(user)}
+          %{id: user.id, username: LeanCoffee.User.display_name(user)}
         ]
       }]
     }
@@ -87,7 +87,7 @@ defmodule LeanCoffee.MeetingChannelTest do
     push socket, "new_topic", %{"subject" => "my topic"}
 
     user_id = user.id
-    user_name = LeanCoffee.LayoutView.user_name(user)
+    user_name = LeanCoffee.LayoutView.display_name(user)
     assert_broadcast "new_topic", %{
       id: _,
       subject: "my topic",
@@ -104,7 +104,7 @@ defmodule LeanCoffee.MeetingChannelTest do
     push socket, "topic_vote", %{id: "#{topic.id}"}
 
     topic_id = topic.id
-    this_user = %{id: user.id, username: LeanCoffee.LayoutView.user_name(user)}
+    this_user = %{id: user.id, username: LeanCoffee.LayoutView.display_name(user)}
     assert_broadcast "topic_update", %{
       id: ^topic_id,
       votes: [^this_user]
@@ -132,8 +132,8 @@ defmodule LeanCoffee.MeetingChannelTest do
     push socket, "topic_vote", %{id: "#{topic.id}"}
 
     topic_id = topic.id
-    other_user = %{id: other_user.id, username: LeanCoffee.LayoutView.user_name(other_user)}
-    this_user = %{id: user.id, username: LeanCoffee.LayoutView.user_name(user)}
+    other_user = %{id: other_user.id, username: LeanCoffee.LayoutView.display_name(other_user)}
+    this_user = %{id: user.id, username: LeanCoffee.LayoutView.display_name(user)}
     assert_broadcast "topic_update", %{
       id: ^topic_id,
       votes: [

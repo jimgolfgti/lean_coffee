@@ -1,6 +1,16 @@
 <h2><%= @channel.name %></h2>
 
-<div id="channel" data-id="<%= @channel.id %>" data-user-id="<%= if @current_user do @current_user.id else -1 end %>" class="grid"></div>
+<div>
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#channel" aria-controls="channel" role="tab" data-toggle="tab">Topics</a></li>
+    <li role="presentation"><a href="#user-list" aria-controls="user-list" role="tab" data-toggle="tab">Participants</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="channel" role="tabpanel" class="tab-pane active" data-id="<%= @channel.id %>" data-user-id="<%= if @current_user do @current_user.id else -1 end %>" class="grid"></div>
+    <div id="user-list" role="tabpanel" class="tab-pane list-unstyled"></div>
+  </div>
+</div>
 
 <%= if @current_user do %>
 <div class="input-group">

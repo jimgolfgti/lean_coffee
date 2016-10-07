@@ -13,8 +13,8 @@ defmodule LeanCoffee.User do
     timestamps()
   end
 
-  def user_name(%{name: name, username: username}) when is_nil(name), do: username
-  def user_name(%{name: name}), do: name
+  def display_name(%{name: name, username: username}) when is_nil(name), do: username
+  def display_name(%{name: name}), do: name
 
   @doc """
   Builds a changeset based on the `struct` and `params`.

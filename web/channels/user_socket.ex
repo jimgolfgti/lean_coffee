@@ -15,7 +15,7 @@ defmodule LeanCoffee.UserSocket do
       {:ok, user_id} ->
         {:ok, assign(socket, :user_id, user_id)}
       {:error, _reason} ->
-        {:ok, assign(socket, :user_id, "anon")}
+        {:ok, assign(socket, :user_id, :anon)}
     end
   end
   def connect(_params, _socket), do: :error

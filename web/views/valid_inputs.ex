@@ -11,7 +11,8 @@ defmodule LeanCoffee.ValidInputs do
 
   defp extend_opts(form, field, opts) do
     defaults = opts ++ Form.input_validations(form, field)
-    case form.source.validations[field] do
+    validations = Map.get form.source, :validations, %{}
+    case validations[field] do
       {:format, regex} -> [{:pattern, Regex.source(regex)} | defaults]
       _ -> defaults
     end

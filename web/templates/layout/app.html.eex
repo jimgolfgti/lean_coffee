@@ -20,7 +20,7 @@
             <%= if @current_user do %>
             <li role="presentation" class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                <%= user_name(@current_user) %> <span class="caret"></span>
+                <%= display_name(@current_user) %> <span class="caret"></span>
               </a>
               <ul class="dropdown-menu">
                 <li><%= link "Account", to: user_path(@conn, :show, @current_user) %></li>
