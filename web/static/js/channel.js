@@ -14,19 +14,48 @@ let Channel = {
     const authenticated = window.userToken.length > 0;
 
     if (authenticated) {
-      const topicSubject = document.getElementById("topic-subject")
-      const topicBody = document.getElementById("topic-body")
-      const suggestButton = document.getElementById("topic-submit")
-      suggestButton.addEventListener("click", e => {
+      const $topicSubject = $("#topic-subject")
+      const $topicBody = $("#topic-body")
+      $("#topic-submit").on("click", () => {
         const payload = {
-          "subject": topicSubject.value,
-          "body": topicBody.value
+          "subject": $topicSubject.val(),
+          "body": $topicBody.val()
         }
         channel
           .push("new_topic", payload)
-          .receive("error", e => console.log(e))
-        topicSubject.value = ""
-        topicBody.value = ""
+          .receive("error", ({errors}) => {
+            for (let key of ["subject", "body"]) {
+              const hasError = errors.hasOwnProperty(key)
+              const field = $(`#topic-${key}`)
+                .parent()
+                .toggleClass("has-error", hasError)
+                .end()
+              if (hasError) {
+                const msg = errors[key].join("<br/>")
+                field
+                  .attr("data-content", msg)
+                  .popover({
+                    "trigger": "focus hover",
+                    "container": "body",
+                    "placement": "auto bottom"
+                  })
+              }
+              else {
+                field.popover("destroy")
+              }
+            }
+          })
+          .receive("ok", () => {
+            $topicSubject
+              .popover("destroy")
+              .val("")
+              .removeClass("has-error")
+            $topicBody
+              .popover("destroy")
+              .val("")
+              .parent()
+              .removeClass("has-error")
+          })
       })
       element.addEventListener("click", e => {
         let target = e.target;
