@@ -9,11 +9,7 @@
 
   <li>
     <strong>Name:</strong>
-    <%= if @user.name do %>
-    <%= @user.name %>
-    <% else %>
-    <i>not set</i>
-    <% end %>
+    <%= @user.name || {:safe, "<i>not set</i>"} %>
   </li>
 
   <li>

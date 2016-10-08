@@ -7,7 +7,8 @@ use Mix.Config
 
 # General application configuration
 config :lean_coffee,
-  ecto_repos: [LeanCoffee.Repo]
+  ecto_repos: [LeanCoffee.Repo],
+  client_validation: :on
 
 # Configures the endpoint
 config :lean_coffee, LeanCoffee.Endpoint,

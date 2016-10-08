@@ -97,7 +97,7 @@ defmodule LeanCoffee.MeetingChannel do
     {:noreply, socket}
   end
 
-  defp track_user(socket = %{assigns: %{user_id: :anon}}), do: :ok
+  defp track_user(%{assigns: %{user_id: :anon}}), do: :ok
   defp track_user(socket = %{assigns: %{user_id: user_id}}) do
     {:ok, _} = LeanCoffee.Presence.track(socket, user_id, %{
       online_at: System.system_time(:milli_seconds)

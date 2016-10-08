@@ -7,23 +7,10 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= label f, :name, class: "control-label" %>
-    <%= text_input f, :name, class: "form-control" %>
-    <%= error_tag f, :name %>
-  </div>
+  <%= input f, :name %>
+  <%= input f, :username %>
+  <%= input f, :password %>
 
-  <div class="form-group">
-    <%= label f, :username, class: "control-label" %>
-    <%= text_input f, :username, class: "form-control", title: "Email Address" %>
-    <%= error_tag f, :username %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :password, class: "control-label" %>
-    <%= password_input f, :password, class: "form-control" %>
-    <%= error_tag f, :password %>
-  </div>
   <div class="form-group">
     <%= submit "Create User", class: "btn btn-primary" %>
   </div>
