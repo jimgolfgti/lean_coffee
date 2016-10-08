@@ -2,13 +2,38 @@
 
 <div>
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#channel" aria-controls="channel" role="tab" data-toggle="tab">Topics</a></li>
-    <li role="presentation"><a href="#user-list" aria-controls="user-list" role="tab" data-toggle="tab">Participants</a></li>
+    <li role="presentation" class="active"><a href="#topics" aria-controls="topics" role="tab" data-toggle="tab">Topics</a></li>
+    <li role="presentation"><a href="#participants" aria-controls="participants" role="tab" data-toggle="tab">Participants</a></li>
   </ul>
 
   <div class="tab-content">
-    <div id="channel" role="tabpanel" class="tab-pane active" data-id="<%= @channel.id %>" data-user-id="<%= if @current_user do @current_user.id else -1 end %>" class="grid"></div>
-    <div id="user-list" role="tabpanel" class="tab-pane list-unstyled"></div>
+    <div id="topics" class="tab-pane active" role="tabpanel">
+      <div id="channel" class="grid" data-id="<%= @channel.id %>" data-user-id="<%= if @current_user do @current_user.id else -1 end %>"></div>
+      <%= if @current_user do %>
+      <div class="input-group">
+        <span class="input-group-addon" id="topic-subject-addon">Topic</span>
+        <input id="topic-subject"
+               type="text"
+               class="form-control"
+               aria-described-by="topic-subject-addon"
+               placeholder="Your suggestion..."></input>
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon" id="topic-body-addon">Details</span>
+        <textarea id="topic-body"
+                  rows="3"
+                  class="form-control"
+                  aria-described-by="topic-body-addon"
+                  placeholder="Describe your topic please..."></textarea>
+      </div>
+      <button id="topic-submit" type="button" class="btn btn-primary form-control">
+        Suggest
+      </button>
+      <% end %>
+    </div>
+    <div id="participants" class="tab-pane" role="tabpanel">
+      <div id="user-list" class="list-unstyled"></div>
+    </div>
   </div>
 </div>
 
@@ -27,27 +52,5 @@
     </div>
   </div>
 </div>
-
-<%= if @current_user do %>
-<div class="input-group">
-  <span class="input-group-addon" id="topic-subject-addon">Topic</span>
-  <input id="topic-subject"
-         type="text"
-         class="form-control"
-         aria-described-by="topic-subject-addon"
-         placeholder="Your suggestion..."></input>
-</div>
-<div class="input-group">
-  <span class="input-group-addon" id="topic-body-addon">Details</span>
-  <textarea id="topic-body"
-            rows="3"
-            class="form-control"
-            aria-described-by="topic-body-addon"
-            placeholder="Describe your topic please..."></textarea>
-</div>
-<button id="topic-submit" type="button" class="btn btn-primary form-control">
-  Suggest
-</button>
-<% end %>
 
 <%= link "Back", to: nav_path(@conn, :index) %>
