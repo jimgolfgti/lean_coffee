@@ -5,7 +5,7 @@ let Channel = {
   iso: null,
   userId: -1,
 
-  init(socket, element) {
+  init(socket, element, $) {
     if (!element) { return }
     socket.connect()
     const channelId = element.getAttribute("data-id")
@@ -30,10 +30,22 @@ let Channel = {
       })
       element.addEventListener("click", e => {
         let target = e.target;
+        if (target.matches(".panel-heading")) {
+          let topic = $(target.parentNode);
+          $("#view-modal")
+            .find(".modal-title")
+            .html("<strong>Topic:</strong> " + topic.find(".panel-heading").html())
+            .end()
+            .find(".modal-body")
+            .html("<strong>Details:</strong> " + topic.find(".panel-body").html())
+            .end()
+            .modal()
+          return
+        }
         if (target.matches("span")) target = target.parentNode
-        if (!target.matches("[data-id]:not(.disabled)")) return
+        if (!target.matches("[data-topic-id]:not(.disabled)")) return
         target.classList.toggle("disabled")
-        const topicId = target.getAttribute("data-id")
+        const topicId = target.getAttribute("data-topic-id")
         const payload = {
           "id": topicId
         }
@@ -129,7 +141,7 @@ let Channel = {
       ? " disabled"
       : ""
     let vote = votingEnabled
-      ? `&nbsp;<button type="button" class="btn btn-xs btn-success${allowVote}" aria-label="Vote!" data-id="${id}">
+      ? `&nbsp;<button type="button" class="btn btn-xs btn-success${allowVote}" aria-label="Vote!" data-topic-id="${id}">
   <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
 </button>`
       : ""

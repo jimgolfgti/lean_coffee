@@ -1,6 +1,6 @@
 <h2>Channels</h2>
 
-<table class="table">
+<table class="table table-condensed table-hover">
   <thead>
     <tr>
       <th>Name</th>

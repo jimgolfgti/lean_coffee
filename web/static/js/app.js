@@ -20,7 +20,7 @@ import "phoenix_html"
 
 import socket from "./socket"
 import Channel from "./channel"
-Channel.init(socket, document.getElementById("channel"))
+Channel.init(socket, document.getElementById("channel"), jQuery)
 
 $(() => {
   $('ul.pager>li.disabled>a').on('click', e => {

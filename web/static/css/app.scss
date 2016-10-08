@@ -86,6 +86,9 @@ form.link, form.button {
 }
 
 .grid-item-content {
+  .panel-heading {
+    cursor: pointer;
+  }
   .panel-heading, .panel-body, .panel-footer {
     white-space: nowrap;
     overflow: hidden;
