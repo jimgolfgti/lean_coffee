@@ -10,6 +10,13 @@ defmodule LeanCoffee.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      aliases: aliases(),
+     test_coverage: [tool: ExCoveralls],
+     preferred_cli_env: [
+       "coveralls": :test,
+       "coveralls.detail": :test,
+       "coveralls.post": :test,
+       "coveralls.html": :test
+     ],
      deps: deps()]
   end
 
@@ -40,7 +47,8 @@ defmodule LeanCoffee.Mixfile do
      {:cowboy, "~> 1.0"},
      {:comeonin, "~> 2.0"},
      {:scrivener_ecto, "~> 1.0"},
-     {:oauth2, "~> 0.7"}]
+     {:oauth2, "~> 0.7"},
+     {:excoveralls, "~> 0.5", only: :test}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
