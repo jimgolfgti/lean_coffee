@@ -75,9 +75,12 @@ exports.config = {
   npm: {
     enabled: true,
     globals: {
-      $: 'jquery',
-      jQuery: 'jquery',
-      bootstrap: 'bootstrap-sass'
+      $: "jquery",
+      jQuery: "jquery",
+      bootstrap: "bootstrap-sass"
+    },
+    styles: {
+      "animate.css": ["animate.min.css"]
     }
   }
 };

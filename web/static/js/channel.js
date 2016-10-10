@@ -1,5 +1,6 @@
 import Isotope from "isotope-layout"
 import {Presence} from "phoenix"
+import "bootstrap-notify"
 
 let Channel = {
   iso: null,
@@ -99,10 +100,50 @@ let Channel = {
       this.iso.arrange()
     })
 
-    const listBy = (key, {metas: metas, user}) => {
+    const headerHeight = $("header").outerHeight(true);
+    const onJoin = (id, state, {user}) => {
+      if(!state) {
+        $.notify({
+          "message": `${user} joined`,
+          "icon": "glyphicon glyphicon-log-in"
+        }, {
+          "delay": 2000,
+          "type": "success",
+          "placement": {
+            "from": "top",
+            "align": "center"
+          },
+          "newest-on-top": true,
+          "offset": {
+            "y": headerHeight
+          }
+        })
+      }
+    }
+    const onLeave = (id, state, {user}) => {
+      if(state.metas.length === 0) {
+        $.notify({
+          "message": `${user} left`,
+          "icon": "glyphicon glyphicon-log-in"
+        }, {
+          "delay": 2000,
+          "type": "danger",
+          "placement": {
+            "from": "top",
+            "align": "center"
+          },
+          "newest-on-top": true,
+          "offset": {
+            "y": headerHeight
+          }
+        })
+      }
+    }
+    const listBy = (key, {metas: [first, ...rest], user}) => {
       return {
         user: parseInt(key) === this.userId ? "You" : user,
-        onlineAt: metas[0].online_at
+        onlineAt: first.online_at,
+        deviceCount: rest.length + 1
       }
     }
     const formatTimestamp = (timestamp) => {
@@ -131,7 +172,7 @@ let Channel = {
     })
 
     channel.on("presence_diff", diff => {
-      presences = Presence.syncDiff(presences, diff)
+      presences = Presence.syncDiff(presences, diff, onJoin, onLeave)
       render(presences)
     })
 
