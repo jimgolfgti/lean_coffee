@@ -11,6 +11,10 @@ defmodule LeanCoffee.AuthTest do
     {:ok, %{conn: conn}}
   end
 
+  test "init returns repo as state" do
+    assert Auth.init(repo: :foo) == :foo
+  end
+
   test "authenticate_user halts when no current_user exists", %{conn: conn} do
     conn = Auth.authenticate_user(conn, [])
 

@@ -10,10 +10,6 @@ defmodule LeanCoffee.Router do
     plug LeanCoffee.Auth, repo: LeanCoffee.Repo
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
   scope "/", LeanCoffee do
     pipe_through :browser # Use the default browser stack
 

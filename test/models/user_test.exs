@@ -39,4 +39,16 @@ defmodule LeanCoffee.UserTest do
     assert pass_hash
     assert Comeonin.Bcrypt.checkpw(pass, pass_hash)
   end
+
+  test "user with both username and name has correct display name" do
+    user = %User{name: "Foo", username: "foo@bar"}
+
+    assert User.display_name(user) == "Foo"
+  end
+
+  test "user with only username has correct display name" do
+    user = %User{username: "foo@bar"}
+
+    assert User.display_name(user) == "foo@bar"
+  end
 end
