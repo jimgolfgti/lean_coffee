@@ -68,6 +68,5 @@ defmodule LeanCoffee.OAuthController do
     |> put_header("Accept", "application/json")
     |> put_param(:client_secret, client.client_secret)
     |> OAuth2.Strategy.AuthCode.get_token(params, headers)
-    |> put_param(:response_type, "")
   end
 end
