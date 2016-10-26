@@ -6,7 +6,7 @@ defmodule LeanCoffee.User do
     field :username, :string
     field :password, :string, virtual: true
     field :password_hash, :string
-    has_many :channels, LeanCoffee.Channel
+    has_many :meetups, LeanCoffee.Meetup
     has_many :topics, LeanCoffee.Topic
     has_many :topic_votes, LeanCoffee.Topic.Vote
 

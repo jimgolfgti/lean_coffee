@@ -3,8 +3,8 @@ defmodule LeanCoffee.Topic.VoteTest do
 
   test "converts unique_constraint on topic and user to error" do
     user = insert_user(username: "user@example.com")
-    channel = insert_channel(user)
-    topic = insert_topic(user, channel)
+    meetup = insert_meetup(user)
+    topic = insert_topic(user, meetup)
     user
     |> build_assoc(:topic_votes, topic_id: topic.id)
     |> Repo.insert!()

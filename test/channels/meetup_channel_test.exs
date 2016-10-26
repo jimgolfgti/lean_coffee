@@ -1,4 +1,4 @@
-defmodule LeanCoffee.MeetingChannelTest do
+defmodule LeanCoffee.MeetupChannelTest do
   use LeanCoffee.ChannelCase
 
   setup config do
@@ -15,28 +15,28 @@ defmodule LeanCoffee.MeetingChannelTest do
   end
 
   @tag anonymous: true
-  test "anonymous user may join channel", %{socket: socket} do
-    channel = insert_channel(insert_user())
+  test "anonymous user may join meetup", %{socket: socket} do
+    meetup = insert_meetup(insert_user())
 
-    {:ok, reply, _socket} = subscribe_and_join(socket, "channel:#{channel.id}", %{})
+    {:ok, reply, _socket} = subscribe_and_join(socket, "meetup:#{meetup.id}", %{})
 
     assert reply == %{topics: []}
   end
 
   test "join without topics replies empty list", %{socket: socket, user: user} do
-    channel = insert_channel(user)
+    meetup = insert_meetup(user)
 
-    {:ok, reply, _socket} = subscribe_and_join(socket, "channel:#{channel.id}", %{})
+    {:ok, reply, _socket} = subscribe_and_join(socket, "meetup:#{meetup.id}", %{})
 
     assert reply == %{topics: []}
   end
 
   test "join with topics replies with available topics", %{socket: socket, user: user} do
-    channel = insert_channel(user)
-    topic = insert_topic(user, channel)
+    meetup = insert_meetup(user)
+    topic = insert_topic(user, meetup)
     vote_for_topic user, topic
 
-    {:ok, reply, _socket} = subscribe_and_join(socket, "channel:#{channel.id}", %{})
+    {:ok, reply, _socket} = subscribe_and_join(socket, "meetup:#{meetup.id}", %{})
 
     assert reply == %{topics: [%{
         id: topic.id,
@@ -81,7 +81,7 @@ defmodule LeanCoffee.MeetingChannelTest do
     }
   end
 
-  test "new_topic broadcasts to channel subscribes", %{socket: socket, user: user} do
+  test "new_topic broadcasts to meetup subscribes", %{socket: socket, user: user} do
     socket = subscribe_and_join socket
 
     push socket, "new_topic", %{"subject" => "my topic"}
@@ -97,9 +97,9 @@ defmodule LeanCoffee.MeetingChannelTest do
     }
   end
 
-  test "topic_vote broadcasts to channel subscribes", %{socket: socket, user: user} do
+  test "topic_vote broadcasts to meetup subscribes", %{socket: socket, user: user} do
     socket = subscribe_and_join socket
-    topic = insert_topic user, socket.assigns.channel_id
+    topic = insert_topic user, socket.assigns.meetup_id
 
     push socket, "topic_vote", %{id: "#{topic.id}"}
 
@@ -113,7 +113,7 @@ defmodule LeanCoffee.MeetingChannelTest do
 
   test "duplicate topic_vote returns errors", %{socket: socket, user: user} do
     socket = subscribe_and_join socket
-    topic = insert_topic user, socket.assigns.channel_id
+    topic = insert_topic user, socket.assigns.meetup_id
     vote_for_topic user, topic
 
     ref = push socket, "topic_vote", %{id: "#{topic.id}"}
@@ -123,8 +123,8 @@ defmodule LeanCoffee.MeetingChannelTest do
 
   test "topic_vote returns current votes for topic", %{socket: socket, user: user} do
     socket = subscribe_and_join socket
-    topic = insert_topic user, socket.assigns.channel_id
-    another_topic = insert_topic user, socket.assigns.channel_id
+    topic = insert_topic user, socket.assigns.meetup_id
+    another_topic = insert_topic user, socket.assigns.meetup_id
     vote_for_topic user, another_topic
     other_user = insert_user(%{name: "Other User"})
     vote_for_topic other_user, topic
@@ -144,10 +144,10 @@ defmodule LeanCoffee.MeetingChannelTest do
   end
 
   defp subscribe_and_join(socket) do
-    channel_owner = insert_user()
-    channel = insert_channel(channel_owner)
+    meetup_owner = insert_user()
+    meetup = insert_meetup(meetup_owner)
 
-    {:ok, _, socket} = subscribe_and_join(socket, "channel:#{channel.id}", %{})
+    {:ok, _, socket} = subscribe_and_join(socket, "meetup:#{meetup.id}", %{})
     socket
   end
 

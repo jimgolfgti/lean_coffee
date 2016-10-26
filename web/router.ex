@@ -14,8 +14,8 @@ defmodule LeanCoffee.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    get "/channels", NavController, :index
-    get "/channels/:id", NavController, :show
+    get "/meetups", NavController, :index
+    get "/meetups/:id", NavController, :show
     resources "/users", UserController, only: [:show, :new, :create]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
@@ -30,6 +30,6 @@ defmodule LeanCoffee.Router do
   scope "/manage", LeanCoffee do
     pipe_through [:browser, :authenticate_user]
 
-    resources "/channels", ChannelController
+    resources "/meetups", MeetupController
   end
 end

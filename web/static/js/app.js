@@ -19,8 +19,8 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 import socket from "./socket"
-import Channel from "./channel"
-Channel.init(socket, document.getElementById("channel"), jQuery)
+import Meetup from "./meetup"
+Meetup.init(socket, document.getElementById("meetup"), jQuery)
 
 $(() => {
   $('ul.pager>li.disabled>a').on('click', e => {

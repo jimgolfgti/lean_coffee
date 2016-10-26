@@ -1,20 +1,20 @@
-defmodule LeanCoffee.MeetingChannel do
+defmodule LeanCoffee.MeetupChannel do
   use LeanCoffee.Web, :channel
 
-  alias LeanCoffee.{Channel,Topic,User}
+  alias LeanCoffee.{Meetup,Topic,User}
   alias LeanCoffee.Topic.Vote
   alias LeanCoffee.{ChangesetView,TopicView,UserView}
 
-  def join("channel:" <> channel_id, _params, socket) do
-    channel_id = String.to_integer(channel_id)
-    channel = Repo.get!(Channel, channel_id)
+  def join("meetup:" <> meetup_id, _params, socket) do
+    meetup_id = String.to_integer(meetup_id)
+    meetup = Repo.get!(Meetup, meetup_id)
 
     votes_query =
       from v in Vote,
       order_by: v.inserted_at,
       preload: [:user]
     topics = Repo.all(
-      from t in assoc(channel, :topics),
+      from t in assoc(meetup, :topics),
       order_by: [asc: t.subject],
       limit: 20,
       preload: [:user, votes: ^votes_query]
@@ -22,7 +22,7 @@ defmodule LeanCoffee.MeetingChannel do
     resp = %{topics: Phoenix.View.render_many(topics, TopicView, "topic.json")}
 
     send(self, :after_join)
-    {:ok, resp, assign(socket, :channel_id, channel_id)}
+    {:ok, resp, assign(socket, :meetup_id, meetup_id)}
   end
 
   def handle_in(event, params, socket) do
@@ -38,7 +38,7 @@ defmodule LeanCoffee.MeetingChannel do
   def handle_in("new_topic", params, user, socket) do
     changeset =
       user
-      |> build_assoc(:topics, channel_id: socket.assigns.channel_id)
+      |> build_assoc(:topics, meetup_id: socket.assigns.meetup_id)
       |> Topic.changeset(params)
 
     case Repo.insert(changeset) do

@@ -5,7 +5,7 @@ defmodule LeanCoffee.Topic do
     field :subject, :string
     field :body, :string
     belongs_to :user, LeanCoffee.User
-    belongs_to :channel, LeanCoffee.Channel
+    belongs_to :meetup, LeanCoffee.Meetup
     has_many :votes, LeanCoffee.Topic.Vote
 
     timestamps()

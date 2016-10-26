@@ -1,0 +1,42 @@
+<h2>Listing meetups</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Slug</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for meetup <- @meetups do %>
+    <tr>
+      <td><%= meetup.name %></td>
+      <td><%= meetup.slug %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: meetup_path(@conn, :show, meetup), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: meetup_path(@conn, :edit, meetup), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: meetup_path(@conn, :delete, meetup), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+<nav aria-label="Browse your meetups">
+  <ul class="pager">
+    <li class="previous <%= if @page_number == 1 do %>disabled<% end %>">
+    <%= link to: meetup_path(@conn, :index, page: @page_number - 1) do %>
+      <span aria-hidden="true">&larr;</span> Newer
+    <% end %>
+    </li>
+    <li class="next <%= if @page_number >= @total_pages do %>disabled<% end %>">
+    <%= link to: meetup_path(@conn, :index, page: @page_number + 1) do %>
+      Older <span aria-hidden=\"true\">&rarr;</span>
+    <% end %>
+    </li>
+  </ul>
+</nav>
+
+<%= link "New meetup", to: meetup_path(@conn, :new), class: "btn btn-primary", role: "button" %>

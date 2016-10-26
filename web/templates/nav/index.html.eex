@@ -1,4 +1,4 @@
-<h2>Channels</h2>
+<h2>Meetups</h2>
 
 <table class="table table-condensed table-hover">
   <thead>
@@ -9,18 +9,18 @@
     </tr>
   </thead>
   <tbody>
-<%= for channel <- @channels do %>
+<%= for meetup <- @meetups do %>
     <tr>
-      <td><%= channel.name %></td>
+      <td><%= meetup.name %></td>
 
       <td class="text-right">
-        <%= link "Open", to: nav_path(@conn, :show, channel), class: "btn btn-default btn-xs" %>
+        <%= link "Open", to: nav_path(@conn, :show, meetup), class: "btn btn-default btn-xs" %>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
-<nav aria-label="Browse available channels">
+<nav aria-label="Browse available meetups">
   <ul class="pager">
     <li class="previous <%= if @page_number == 1 do %>disabled<% end %>">
     <%= link to: nav_path(@conn, :index, page: @page_number - 1) do %>
@@ -36,6 +36,6 @@
 </nav>
 
 <%= if @current_user do %>
-<%= link "New channel", to: channel_path(@conn, :new), class: "btn btn-success", role: "button" %>
+<%= link "New meetup", to: meetup_path(@conn, :new), class: "btn btn-success", role: "button" %>
 <% end %>
 <%= link "Home", to: page_path(@conn, :index), class: "btn btn-primary", role: "button" %>

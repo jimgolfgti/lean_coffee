@@ -2,7 +2,7 @@ defmodule LeanCoffee.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "channel:*", LeanCoffee.MeetingChannel
+  channel "meetup:*", LeanCoffee.MeetupChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

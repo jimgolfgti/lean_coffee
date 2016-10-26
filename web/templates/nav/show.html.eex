@@ -1,4 +1,4 @@
-<h2><%= @channel.name %></h2>
+<h2><%= @meetup.name %></h2>
 
 <div>
   <ul class="nav nav-tabs" role="tablist">
@@ -8,7 +8,7 @@
 
   <div class="tab-content">
     <div id="topics" class="tab-pane active" role="tabpanel">
-      <div id="channel" class="grid" data-id="<%= @channel.id %>" data-user-id="<%= if @current_user do @current_user.id else -1 end %>"></div>
+      <div id="meetup" class="grid" data-id="<%= @meetup.id %>" data-user-id="<%= if @current_user do @current_user.id else -1 end %>"></div>
       <%= if @current_user do %>
       <div class="input-group">
         <span class="input-group-addon" id="topic-subject-addon">Topic</span>

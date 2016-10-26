@@ -1,8 +1,8 @@
-defmodule LeanCoffee.Channel do
+defmodule LeanCoffee.Meetup do
   use LeanCoffee.Web, :model
 
   @primary_key {:id, LeanCoffee.Permalink, autogenerate: true}
-  schema "channels" do
+  schema "meetups" do
     field :name, :string
     field :slug, :string
     belongs_to :user, LeanCoffee.User
@@ -31,7 +31,7 @@ defmodule LeanCoffee.Channel do
   end
 end
 
-defimpl Phoenix.Param, for: LeanCoffee.Channel do
+defimpl Phoenix.Param, for: LeanCoffee.Meetup do
   def to_param(%{id: id, slug: slug}) do
     "#{id}-#{slug}"
   end

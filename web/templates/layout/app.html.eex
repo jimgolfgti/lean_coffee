@@ -16,7 +16,7 @@
       <header class="header">
         <nav role="navigation">
           <ul class="nav nav-pills navbar-right">
-            <li><%= link "Channels", to: nav_path(@conn, :index) %></li>
+            <li><%= link "Meetups", to: nav_path(@conn, :index) %></li>
             <%= if @current_user do %>
             <li role="presentation" class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -24,7 +24,7 @@
               </a>
               <ul class="dropdown-menu">
                 <li><%= link "Account", to: user_path(@conn, :show, @current_user) %></li>
-                <li><%= link "My Channels", to: channel_path(@conn, :index) %></li>
+                <li><%= link "My Meetups", to: meetup_path(@conn, :index) %></li>
               </ul>
             </li>
             <li><%= link "Log out", to: session_path(@conn, :delete, @current_user), method: "delete" %></li>

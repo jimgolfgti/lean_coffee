@@ -1,6 +1,0 @@
-<h2>New channel</h2>
-
-<%= render "form.html", changeset: @changeset,
-                        action: channel_path(@conn, :create) %>
-
-<%= link "My Channels", to: channel_path(@conn, :index) %>

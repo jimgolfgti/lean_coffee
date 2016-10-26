@@ -2,16 +2,16 @@ import Isotope from "isotope-layout"
 import {Presence} from "phoenix"
 import "bootstrap-notify"
 
-let Channel = {
+let Meetup = {
   iso: null,
   userId: -1,
 
   init(socket, element, $) {
     if (!element) { return }
     socket.connect()
-    const channelId = element.getAttribute("data-id")
+    const meetupId = element.getAttribute("data-id")
     this.userId = parseInt(element.getAttribute("data-user-id"))
-    const channel = socket.channel("channel:" + channelId)
+    const channel = socket.channel("meetup:" + meetupId)
     const authenticated = window.userToken.length > 0;
 
     if (authenticated) {
@@ -234,4 +234,4 @@ let Channel = {
     this.iso.arrange()
   }
 }
-export default Channel
+export default Meetup
